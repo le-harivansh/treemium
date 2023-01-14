@@ -11,12 +11,15 @@ class Show extends Component
     use WithPagination;
 
     const SORT_ASCENDING = 'asc';
+
     const SORT_DESCENDING = 'desc';
 
     public string $searchString = '';
 
     public bool $showUnresolvedQueries = true;
+
     public bool $showResolvedQueries = false;
+
     public bool $showTrashedQueries = false;
 
     public string $sortDirection = self::SORT_DESCENDING;
@@ -49,7 +52,7 @@ class Show extends Component
             $queries = $queries->orWhereNotNull('resolved_at');
         }
 
-        if (!$this->showTrashedQueries && !$this->showUnresolvedQueries && !$this->showResolvedQueries) {
+        if (! $this->showTrashedQueries && ! $this->showUnresolvedQueries && ! $this->showResolvedQueries) {
             $queries = $queries->withTrashed();
         }
 

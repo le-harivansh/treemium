@@ -10,19 +10,19 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-         Administrator::factory()->count(10)->create();
+        Administrator::factory()->count(10)->create();
 
-         Administrator::factory([
-             'name' => 'One One',
-             'email' => 'one@one.one',
-         ])->create();
+        Administrator::factory([
+            'name' => 'One One',
+            'email' => 'one@one.one',
+        ])->create();
 
-         Query::factory()
-             ->count(100)
-             ->sequence(fn() => [
-                 'resolved_at' => rand(0, 4) === 0 ? now() : null,
-                 'deleted_at' => rand(0, 4) === 0 ? now() : null,
-             ])
-             ->create();
+        Query::factory()
+            ->count(100)
+            ->sequence(fn () => [
+                'resolved_at' => rand(0, 4) === 0 ? now() : null,
+                'deleted_at' => rand(0, 4) === 0 ? now() : null,
+            ])
+            ->create();
     }
 }

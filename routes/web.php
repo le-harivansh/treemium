@@ -4,8 +4,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\SendClientQueryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Query\Show as ShowQueriesLivewireComponent;
+use Illuminate\Support\Facades\Route;
 
 // client
 Route::view('', 'landing')->name('landing');

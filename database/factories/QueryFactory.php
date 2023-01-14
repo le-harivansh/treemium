@@ -15,7 +15,7 @@ class QueryFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            'tel' => substr(str_shuffle("0123456789"), 0, rand(7, 14)),
+            'tel' => substr(str_shuffle('0123456789'), 0, rand(7, 14)),
             'message' => fake()->text(),
         ];
     }
