@@ -36,28 +36,53 @@ class Show extends Component
         $this->resetPage();
     }
 
+    public function markQueryAsResolved(int $queryId): void
+    {
+        $query = Query::withTrashed($queryId)->find($queryId);
+
+        $query->update(['resolved_at' => now()]);
+    }
+
+    public function markQueryAsUnresolved(int $queryId): void
+    {
+        $query = Query::withTrashed($queryId)->find($queryId);
+
+        $query->update(['resolved_at' => null]);
+    }
+
+    public function trashQuery(Query $query): void
+    {
+        $query->delete();
+    }
+
+    public function restoreQuery(int $queryId): void
+    {
+        Query::withTrashed()->find($queryId)->restore();
+    }
+
+    public function permanentlyDeleteQuery(int $queryId): void
+    {
+        Query::withTrashed()->find($queryId)->forceDelete();
+    }
+
     public function render()
     {
         $queries = Query::query();
 
         if ($this->showTrashedQueries) {
-            $queries = $queries->withTrashed()->whereNotNull('deleted_at');
+            $queries->withTrashed()->orWhereNotNull('deleted_at');
         }
 
         if ($this->showUnresolvedQueries) {
-            $queries = $queries->orWhereNull('resolved_at');
+            $queries->orWhereNull('resolved_at');
         }
 
         if ($this->showResolvedQueries) {
-            $queries = $queries->orWhereNotNull('resolved_at');
-        }
-
-        if (! $this->showTrashedQueries && ! $this->showUnresolvedQueries && ! $this->showResolvedQueries) {
-            $queries = $queries->withTrashed();
+            $queries->orWhereNotNull('resolved_at');
         }
 
         if ($this->searchString) {
-            $queries = $queries
+            $queries
                 ->where('name', 'ILIKE', "%{$this->searchString}%")
                 ->orWhere('email', 'ILIKE', "%{$this->searchString}%")
                 ->orWhere('tel', 'ILIKE', "%{$this->searchString}%")

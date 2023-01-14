@@ -6,43 +6,51 @@
 
 <main class="mx-auto container mt-8 flex flex-col space-y-8">
     <div class="flex space-x-6 items-center">
-        <input type="text" placeholder="Search..." wire:model="searchString" class="flex-1 rounded-lg border-slate-500 focus:ring-1">
+        <input type="text" placeholder="Search..." wire:model="searchString"
+               class="flex-1 rounded-lg border-slate-500 focus:ring-1">
 
         <div class="flex space-x-2">
-            <label for="show-unresolved-queries" class="{{ $showUnresolvedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
-                <input type="checkbox" id="show-unresolved-queries"  class="hidden" wire:model="showUnresolvedQueries">
+            <label for="show-unresolved-queries"
+                   class="{{ $showUnresolvedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
+                <input type="checkbox" id="show-unresolved-queries" class="hidden" wire:model="showUnresolvedQueries">
                 {{ __('Unresolved') }}
             </label>
-            <label for="show-resolved-queries" class="{{ $showResolvedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
-                <input type="checkbox" id="show-resolved-queries"  class="hidden" wire:model="showResolvedQueries">
+            <label for="show-resolved-queries"
+                   class="{{ $showResolvedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
+                <input type="checkbox" id="show-resolved-queries" class="hidden" wire:model="showResolvedQueries">
                 {{ __('Resolved') }}
             </label>
-            <label for="show-trashed-queries" class="{{ $showTrashedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
+            <label for="show-trashed-queries"
+                   class="{{ $showTrashedQueries ? 'bg-blue-500 text-white' : '' }} cursor-pointer p-2 rounded-lg">
                 <input type="checkbox" id="show-trashed-queries" class="hidden" wire:model="showTrashedQueries">
                 {{ __('Trashed') }}
             </label>
         </div>
 
-        <button title="{{ __('Sort in ' . ($sortDirection === 'asc' ? 'descending' : 'ascending') . ' order') }}" wire:click="toggleSortDirection">
+        <button title="{{ __('Sort in ' . ($sortDirection === 'asc' ? 'descending' : 'ascending') . ' order') }}"
+                wire:click="toggleSortDirection">
             @if($sortDirection === 'asc')
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"/>
                 </svg>
             @else
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"/>
                 </svg>
             @endif
         </button>
 
         <label for="show-count">
-            <input type="number" id="show-count" wire:model="showCount" class="w-16 rounded-lg border-slate-500 focus:ring-1">
+            <input type="number" id="show-count" wire:model="showCount"
+                   class="w-16 rounded-lg border-slate-500 focus:ring-1">
         </label>
     </div>
     <div class="flex flex-col space-y-8">
         <div class="flex flex-col space-y-4">
             @foreach($queries as $query)
-                <article class="p-4 bg-white rounded-lg shadow-md">
+                <article class="p-4 bg-white rounded-lg shadow-md" wire:key="{{ $query->id }}">
                     <div class="flex justify-between">
                         <p><span class="inline-block w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('Name') }}:</span>{{ $query->name }}
                         </p>
@@ -67,14 +75,44 @@
                                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </button>
-                        <button title="{{ __('Mark as resolved') }}" class="text-gray-400 hover:text-green-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                 stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </button>
-                        <button title="{{ __('Delete') }}" class="text-gray-400 hover:text-red-600">
+                        @if($query->resolved_at)
+                            <button title="{{ __('Mark as unresolved') }}" class="text-gray-400 hover:text-yellow-500"
+                                    wire:click="markQueryAsUnresolved({{ $query->id }})">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </button>
+                        @else
+                            <button title="{{ __('Mark as resolved') }}" class="text-gray-400 hover:text-green-600"
+                                    wire:click="markQueryAsResolved({{ $query->id }})">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5"
+                                     stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </button>
+                        @endif
+                        @if($query->deleted_at)
+                            <button title="{{ __('Restore') }}" class="text-gray-400 hover:text-green-500"
+                                    wire:click="restoreQuery({{ $query->id }})">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>
+                                </svg>
+                            </button>
+                        @endif
+                        <button title="{{ $query->deleted_at ? __('Delete') : __('Trash') }}"
+                                class="{{ $query->deleted_at ? 'text-red-600' : 'text-gray-400 hover:text-red-600' }}"
+                                @if($query->deleted_at)
+                                    wire:click="permanentlyDeleteQuery({{ $query->id }})"
+                                @else
+                                    wire:click="trashQuery({{ $query }})"
+                            @endif
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
