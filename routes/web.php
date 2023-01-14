@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\SendClientQueryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\SendClientQueryController;
+use Illuminate\Support\Facades\Route;
 
 // client
-Route::view('', 'client.index')->name('landing');
+Route::view('', 'landing')->name('landing');
 Route::post('send-query', SendClientQueryController::class)->name('send-query');
-Route::view('query-sent', 'client.query-sent')->name('query-sent');
+
+Route::view('query-sent', 'query-sent')->name('query-sent');
 
 // admin
 Route::prefix('admin')->group(function () {

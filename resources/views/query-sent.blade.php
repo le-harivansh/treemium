@@ -1,4 +1,4 @@
-@extends('client.layouts.main')
+@extends('layouts.client')
 
 @section('main-content')
     <!-- Masthead -->
