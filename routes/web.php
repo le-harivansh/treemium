@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\SendClientQueryController;
-use App\Http\Livewire\Query\Show as ShowQueriesLivewireComponent;
+use App\Http\Livewire\Query\Index as ShowQueriesLivewireComponent;
 use Illuminate\Support\Facades\Route;
 
 // client

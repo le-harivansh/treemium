@@ -6,7 +6,7 @@ use App\Models\Query;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Show extends Component
+class Index extends Component
 {
     use WithPagination;
 
@@ -89,7 +89,7 @@ class Show extends Component
                 ->orWhere('message', 'ILIKE', "%{$this->searchString}%");
         }
 
-        return view('livewire.query.show')
+        return view('livewire.query.index')
             ->layout('layouts.app')
             ->with([
                 'queries' => $queries->orderBy('created_at', $this->sortDirection)->paginate($this->showCount ?? 0),
