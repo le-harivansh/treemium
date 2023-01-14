@@ -16,5 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          Administrator::factory(10)->create();
+
+         Administrator::factory([
+             'name' => 'One One',
+             'email' => 'one@one.one',
+         ])->create();
     }
 }
