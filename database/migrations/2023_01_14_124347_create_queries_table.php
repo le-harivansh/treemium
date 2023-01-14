@@ -16,16 +16,13 @@ return new class extends Migration
             $table->string('tel');
             $table->text('message');
 
+            $table->timestamp('resolved_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('queries');
     }
