@@ -175,31 +175,42 @@
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">{{ __('Contactez-nous') }}</h2>
             </div>
-            <form id="contactForm" action="recup_contact.php" method="POST">
-                <input type=hidden id="g_token" name="g_token"/>
+
+            {{-- Validation --}}
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="contactForm" action="{{ route('send-query') }}" method="POST">
+                @csrf
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <!-- Name input-->
-                            <input class="form-control" name="name" id="name" type="text" placeholder="Votre Nom *"
+                            <input class="form-control" name="name" id="name" type="text"
+                                   placeholder="{{ __('Votre Nom') }} *" value="{{ old('name') }}" autocomplete="name"
                                    required/>
                         </div>
                         <div class="form-group">
-                            <!-- Email address input-->
-                            <input class="form-control" name="email" id="email" type="email" placeholder="Votre Email *"
-                                   required/>
+                            <input class="form-control" name="email" id="email" type="email"
+                                   placeholder="{{ __('Votre Email') }} *" value="{{ old('email') }}"
+                                   autocomplete="email" required/>
                         </div>
                         <div class="form-group mb-md-0">
-                            <!-- Phone number input-->
-                            <input class="form-control" name="tel" id="tel" type="tel" placeholder="Votre Téléphone *"
-                                   required/>
+                            <input class="form-control" name="tel" id="tel" type="tel"
+                                   placeholder="{{ __('Votre Téléphone') }} *" value="{{ old('tel') }}"
+                                   autocomplete="tel" required/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-textarea mb-md-0">
-                            <!-- Message input-->
                             <textarea class="form-control" name="message" id="message" type="text"
-                                      placeholder="Votre Message *" required></textarea>
+                                      placeholder="{{ __('Votre Message') }} *" required>{{ old('message') }}</textarea>
                         </div>
                     </div>
                 </div>

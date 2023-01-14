@@ -25,9 +25,9 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="#page-top"><img src="{{ asset('assets/img/client/logo.png') }}"
+        <a class="navbar-brand" href="{{ route('landing') }}"><img src="{{ asset('assets/img/client/logo.png') }}"
                                                       alt="{{ __('Logo Treemium') }}"/></a>
-        <a class="navbar-brand" href="#page-top"><span class="mot_vert strong center">{{ __('Treemium') }}</span></a>
+        <a class="navbar-brand" href="{{ route('landing') }}"><span class="mot_vert strong center">{{ __('Treemium') }}</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             {{ __('Menu') }}
