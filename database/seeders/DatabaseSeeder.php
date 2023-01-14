@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Administrator;
+use App\Models\Query;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
              'name' => 'One One',
              'email' => 'one@one.one',
          ])->create();
+
+         Query::factory(100)->create(); // TODO: add sequence for resolved_at & deleted_at
     }
 }

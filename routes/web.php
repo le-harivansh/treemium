@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\SendClientQueryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Query\Show as ShowQueriesLivewireComponent;
 
 // client
 Route::view('', 'landing')->name('landing');
@@ -37,7 +38,7 @@ Route::prefix('admin')->group(function () {
         Route::view('dashboard', 'dashboard')->name('dashboard');
 
         Route::prefix('query')->name('query.')->group(function () {
-            Route::get('', fn() => 'queries')->name('index');
+            Route::get('', ShowQueriesLivewireComponent::class)->name('index');
         });
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
