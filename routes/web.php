@@ -35,6 +35,10 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::view('dashboard', 'dashboard')->name('dashboard');
 
+        Route::prefix('query')->name('query.')->group(function () {
+            Route::get('', fn() => 'queries')->name('index');
+        });
+
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
     });
