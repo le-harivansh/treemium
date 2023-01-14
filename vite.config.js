@@ -5,6 +5,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                'resources/css/bootstrap-agency.css',
+                'resources/css/client.css',
+                'resources/js/client.js',
+
                 'resources/css/app.css',
                 'resources/js/app.js',
             ],
