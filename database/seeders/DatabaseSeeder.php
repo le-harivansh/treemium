@@ -8,20 +8,21 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
-         Administrator::factory(10)->create();
+         Administrator::factory()->count(10)->create();
 
          Administrator::factory([
              'name' => 'One One',
              'email' => 'one@one.one',
          ])->create();
 
-         Query::factory(100)->create(); // TODO: add sequence for resolved_at & deleted_at
+         Query::factory()
+             ->count(100)
+             ->sequence(fn() => [
+                 'resolved_at' => rand(0, 4) === 0 ? now() : null,
+                 'deleted_at' => rand(0, 4) === 0 ? now() : null,
+             ])
+             ->create();
     }
 }
