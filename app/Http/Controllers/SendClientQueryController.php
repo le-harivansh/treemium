@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Query;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class SendClientQueryController extends Controller
             'message' => ['required'],
         ]);
 
-        // save query to db...
+        Query::create($validatedData);
 
         return redirect()->route('query-sent');
     }
