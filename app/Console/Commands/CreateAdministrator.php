@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Models\Administrator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +20,7 @@ class CreateAdministrator extends Command
         $email = $this->ask('Email');
         $password = $this->secret('Password');
 
-        $newAdministrator = User::create([
+        $newAdministrator = Administrator::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
