@@ -58,8 +58,8 @@ You can send a message from the 'Contact form' on the landing page of the applic
 #### Authentication
 You can access the administration section at [http://localhost/admin/login](http://localhost/admin/login). If you have migrated and seeded the database, you can access it using the following user credentials:
 <pre>
-Email: **one@one.one**
-Password: **password**
+Email: one@one.one
+Password: password
 </pre>
 
 #### Capabilities
