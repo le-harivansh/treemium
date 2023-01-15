@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Query;
 
+use App\Mail\QueryReply;
 use App\Models\Query;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Show extends Component
@@ -67,6 +69,10 @@ class Show extends Component
 
     public function sendReply(): void
     {
+        Mail::to($this->query->email)->send(
+            new QueryReply($this->query->name, $this->query->message, $this->reply)
+        );
+
         $this->reply = '';
     }
 
