@@ -23,6 +23,8 @@ class Show extends Component
 
     public string $reply = '';
 
+    public string $comment = '';
+
     protected $listeners = [
         'refreshComponent' => '$refresh',
     ];
@@ -73,7 +75,24 @@ class Show extends Component
             new QueryReply($this->query->name, $this->query->message, $this->reply)
         );
 
+        $this->query->comments()->create([
+            'administrator_id' => auth()->user()->id,
+            'message' => "Replied: {$this->reply}",
+        ]);
+
         $this->reply = '';
+        $this->emitSelf('refreshComponent');
+    }
+
+    public function saveComment(): void
+    {
+        $this->query->comments()->create([
+            'administrator_id' => auth()->user()->id,
+            'message' => $this->comment,
+        ]);
+
+        $this->comment = '';
+        $this->emitSelf('refreshComponent');
     }
 
     public function render()

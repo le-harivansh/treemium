@@ -4,7 +4,7 @@
     </h2>
 </x-slot>
 
-<main class="mx-auto container mt-8 flex flex-col space-y-8" x-data="{ showReplySection: false, reply: @entangle('reply') }">
+<main class="mx-auto container mt-8 pb-8 flex flex-col space-y-8" x-data="{ showReplySection: false, reply: @entangle('reply') }">
     <article class="p-4 flex flex-col space-y-6 bg-white rounded-lg shadow-lg">
         <p><span class="inline-block w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('Name') }}:</span>{{ $query->name }}</p>
         <p><span class="inline-block w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('E-mail') }}:</span>{{ $query->email }}</p>
@@ -70,4 +70,34 @@
             <button type="button" wire:click="sendReply" class="px-6 py-2 rounded-lg text-white" :class="[ !reply ? 'bg-indigo-300' : 'bg-indigo-500' ]" :disabled="!reply">{{ __('Send') }}</button>
         </div>
     </div>
+
+    <section class="flex flex-col space-y-6" x-data="{ showCommentSection: false, comment: @entangle('comment') }">
+        <div class="flex justify-between">
+            <h2 class="text-2xl font-bold uppercase tracking-wider text-slate-400">{{ __('Comments') }}</h2>
+            <button type="button" class="text-slate-500" @click="showCommentSection = true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="p-2 flex flex-col space-y-4 bg-white rounded-lg shadow-lg" x-show="showCommentSection" x-cloak>
+            <textarea cols="30" rows="2" placeholder="{{ __('Comment') }}..." class="rounded-lg focus:ring-1" wire:model="comment"></textarea>
+            <div class="flex justify-end">
+                <button type="button" wire:click="saveComment" class="px-6 py-2 rounded-lg text-white" :class="[ !comment ? 'bg-indigo-300' : 'bg-indigo-500' ]" :disabled="!comment">{{ __('Send') }}</button>
+            </div>
+        </div>
+
+        <div class="flex flex-col space-y-4">
+        @foreach($query->comments()->latest()->get() as $comment)
+            <div class="p-2 bg-white rounded-lg shadow flex flex-col space-y-4">
+                <div class="flex justify-between">
+                    <p class="text-xs uppercase tracking-wider text-slate-500 font-bold">{{ $comment->administrator->name }}</p>
+                    <p class="text-xs text-slate-500">{{ $comment->created_at->toDayDateTimeString() }}</p>
+                </div>
+                <p>{{ $comment->message }}</p>
+            </div>
+        @endforeach
+        </div>
+    </section>
 </main>
