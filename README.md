@@ -22,6 +22,12 @@ cd treemium
 cp .env.example .env
 ```
 
+4. Install the project dependencies.
+
+```shell
+docker run --rm -it -u `id -u`:`id -g` -v `pwd`:/app -w /app composer install
+```
+
 4. Run the application.
 
 ```shell
@@ -37,7 +43,7 @@ cp .env.example .env
 6. Build the yarn assets.
 
 ```shell
-./vendor/bin/sail yarn build
+./vendor/bin/sail yarn && ./vendor/bin/sail yarn build
 ```
 
 7. (optional) Create a new administrator.
@@ -70,6 +76,9 @@ You can do the following in the application:
 * Log in the application
 * Log out of the application
 * Reset your password if you forgot it
+* Search through messages (query)
+* Filter messages (query)
+* Sort messages (query)
 * View a message (query)
 * Mark a message (query) as _resolved_
 * Trash a message (query)
