@@ -8,7 +8,7 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithPagination, HasQueryActions;
 
     const SORT_ASCENDING = 'asc';
 
@@ -34,35 +34,6 @@ class Index extends Component
     public function updatedSearchString(): void
     {
         $this->resetPage();
-    }
-
-    public function markQueryAsResolved(int $queryId): void
-    {
-        $query = Query::withTrashed($queryId)->find($queryId);
-
-        $query->update(['resolved_at' => now()]);
-    }
-
-    public function markQueryAsUnresolved(int $queryId): void
-    {
-        $query = Query::withTrashed($queryId)->find($queryId);
-
-        $query->update(['resolved_at' => null]);
-    }
-
-    public function trashQuery(Query $query): void
-    {
-        $query->delete();
-    }
-
-    public function restoreQuery(int $queryId): void
-    {
-        Query::withTrashed()->find($queryId)->restore();
-    }
-
-    public function permanentlyDeleteQuery(int $queryId): void
-    {
-        Query::withTrashed()->find($queryId)->forceDelete();
     }
 
     public function render()
