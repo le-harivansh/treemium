@@ -61,12 +61,12 @@
                     <p><span class="inline-block w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('Tel.') }}:</span>{{ $query->tel }}
                     </p>
                     <div class="flex">
-                        <p class="pt-1 w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('Message') }}
+                        <p class="shrink-0 pt-1 w-24 text-xs uppercase tracking-widest font-bold text-gray-600">{{ __('Message') }}
                             :</p>
                         <p class="align-middle">{{ $query->message }}</p>
                     </div>
                     <div class="flex justify-end space-x-4">
-                        <button title="{{ __('View') }}" class="text-gray-400 hover:text-blue-600">
+                        <a href="{{ route('query.show', ['queryId' => $query->id]) }}" title="{{ __('View') }}" class="text-gray-400 hover:text-blue-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -74,7 +74,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
-                        </button>
+                        </a>
                         @if($query->resolved_at)
                             <button title="{{ __('Mark as unresolved') }}" class="text-gray-400 hover:text-yellow-500"
                                     wire:click="markQueryAsUnresolved({{ $query->id }})">
